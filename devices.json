@@ -1,0 +1,49 @@
+{
+    "devices": [
+        {
+            "id": "1234",
+            "title": "Test Sensor",
+            "description": "In the broadest definition, a sensor is a device, module, machine, or subsystem whose purpose is to detect events or changes in its environment and send the information to other electronics, frequently a computer processor. A sensor is always used with other electronics.",
+            "type": "Sensor", 
+            "price": 20,
+            "currency": "USD",
+            "rating": 5.0,
+            "isFavorite": false,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Light_sensor.png"
+        },
+        {
+            "id": "1235",
+            "title": "Digital Thermostat",
+            "description": "A thermostat is a regulating device component which senses the temperature of a physical system and performs actions so that the system's temperature is maintained near a desired setpoint.",
+            "type": "Thermostat", 
+            "price": 30,
+            "currency": "USD",
+            "rating": 4.5,
+            "isFavorite": false,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Lux_Products_TX9600TS_Thermostat.jpg"
+        },
+        {
+            "id": "1236",
+            "title": "Analog Thermostat",
+            "description": "A thermostat is a regulating device component which senses the temperature of a physical system and performs actions so that the system's temperature is maintained near a desired setpoint.",
+            "type": "Thermostat", 
+            "price": 25,
+            "currency": "USD",
+            "rating": 4.0,
+            "isFavorite": false,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Honeywell_round_thermostat.jpg/2880px-Honeywell_round_thermostat.jpg"
+        },
+            {
+            "id": "1237",
+            "title": "Diode",
+            "description": "A diode is a two-terminal electronic component that conducts current primarily in one direction (asymmetric conductance); it has low (ideally zero) resistance in one direction, and high (ideally infinite) resistance in the other.",
+            "type": "Thermostat", 
+            "price": 2,
+            "currency": "USD",
+            "rating": 4.0,
+            "isFavorite": false,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Diode-closeup.jpg"
+        }
+
+    ]
+}
