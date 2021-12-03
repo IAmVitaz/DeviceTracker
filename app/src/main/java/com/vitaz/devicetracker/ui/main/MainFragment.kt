@@ -1,20 +1,16 @@
 package com.vitaz.devicetracker.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vitaz.MainApplication
+import com.vitaz.devicetracker.R
 import com.vitaz.devicetracker.databinding.MainFragmentBinding
 import com.vitaz.devicetracker.networking.NetworkChecker
 import com.vitaz.devicetracker.networking.dto.Device
@@ -34,8 +30,9 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
-    companion object {
-        fun newInstance() = MainFragment()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -57,6 +54,24 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
         return view
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = MenuItemCompat.getActionView(searchItem) as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.searchQuery.value = newText
+                return false
+            }
+        })
+    }
+
     private fun setupDeviceListRecyclerAdapter() {
         devicesListRecyclerAdapter = DevicesRecyclerAdapter(requireContext())
         devicesListRecyclerView.adapter = devicesListRecyclerAdapter
@@ -66,7 +81,6 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
     }
 
     private fun bindObservers() {
-
         connectivityLiveData.observe(viewLifecycleOwner, { isAvailable ->
             when (isAvailable) {
                 true -> {
@@ -76,11 +90,12 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
                 false -> onLoadingStateChanged(LoadingState.NO_INTERNET, devicesListRecyclerView)
             }
         })
+
         if (!NetworkChecker.isNetworkAvailable(requireContext())) {
             onLoadingStateChanged(LoadingState.NO_INTERNET, devicesListRecyclerView)
         }
 
-        viewModel.deviceList.observe(viewLifecycleOwner, Observer {
+        viewModel.filteredDeviceList.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrEmpty()) {
                 onLoadingStateChanged(LoadingState.ERROR, devicesListRecyclerView)
             } else {

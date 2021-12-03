@@ -1,6 +1,7 @@
 package com.vitaz.devicetracker.ui.main
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +12,27 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.util.*
 
 class MainViewModel : ViewModel() {
     private val deviceService = DeviceService.getDevices()
-    var deviceList = MutableLiveData<List<Device>>()
+    private var fullDeviceList = MutableLiveData<List<Device>>()
+    var filteredDeviceList = MediatorLiveData<List<Device>>()
     var selectedDevice = MutableLiveData<Device>()
+    var searchQuery = MutableLiveData<String>()
 
+
+    init {
+        searchQuery.value = ""
+
+        filteredDeviceList.addSource(searchQuery) {
+            applySearchQuery(it)
+        }
+
+        filteredDeviceList.addSource(fullDeviceList) {
+            filteredDeviceList.value = it
+        }
+    }
 
     fun getDevices() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -24,7 +40,7 @@ class MainViewModel : ViewModel() {
             try {
                 val response = deviceService.getFullListOfDevices()
                 val newList: List<Device> = response.devices
-                deviceList.postValue(newList)
+                fullDeviceList.postValue(newList)
             } catch (e: HttpException) {
                 handleHttpException(currentOperation, e)
             } catch (e: Exception) {
@@ -44,6 +60,16 @@ class MainViewModel : ViewModel() {
             } catch (e: JSONException) {
                 Log.i(tag, "JSONException: $e")
             }
+        }
+    }
+
+    private fun applySearchQuery(searchQuery: String) {
+        fullDeviceList.value?.let {
+            val filteredList = it.filter { device ->
+                device.title.lowercase(Locale.ROOT)
+                    .contains(searchQuery.lowercase(Locale.ROOT))
+            }
+            filteredDeviceList.value = filteredList
         }
     }
 
