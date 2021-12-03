@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="appMainBackground">#000000</color>
+    <color name="topBarColor">#0B0D12</color>
+    <color name="accent">#F29937</color>
+    <color name="mainText">#FFFFFF</color>
+    <color name="secondaryText">#8B909A</color>
+    <color name="recyclerViewItemFilling">#13171F</color>
+
+</resources>
