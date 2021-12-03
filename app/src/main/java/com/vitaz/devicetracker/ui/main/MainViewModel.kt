@@ -15,6 +15,7 @@ import retrofit2.HttpException
 class MainViewModel : ViewModel() {
     private val deviceService = DeviceService.getDevices()
     var deviceList = MutableLiveData<List<Device>>()
+    var selectedDevice = MutableLiveData<Device>()
 
 
     fun getDevices() {

@@ -9,9 +9,9 @@ data class Device(
     val title: String,
     val description: String,
     val type: String,
-    val price: Int,
+    val price: String,
     val currency: String,
-    val rating: Double,
+    val rating: Float,
     val isFavourite: Boolean,
     val imageUrl: String
 )

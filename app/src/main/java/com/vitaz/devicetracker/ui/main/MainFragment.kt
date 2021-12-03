@@ -6,7 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vitaz.MainApplication
@@ -22,6 +27,10 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
     private lateinit var devicesListRecyclerAdapter: DevicesRecyclerAdapter
     private lateinit var devicesListRecyclerView: RecyclerView
 
+    private val viewModel: MainViewModel by viewModels(
+        ownerProducer = { requireActivity() }
+    )
+
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -29,16 +38,12 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         devicesListRecyclerView = binding.devicesRecyclerView
         connectivityLiveData = ConnectivityLiveData(MainApplication.instance)
@@ -92,7 +97,9 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
     }
 
     override fun onDeviceSelect(device: Device) {
-        Log.d("CLICK!","${device.id} device clicker")
+        viewModel.selectedDevice.value = device
+        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment()
+        findNavController().navigate(action)
     }
 
 }
