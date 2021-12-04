@@ -16,7 +16,7 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
     private val deviceService = DeviceService.getDevices()
-    private var fullDeviceList = MutableLiveData<List<Device>>()
+    var fullDeviceList = MutableLiveData<List<Device>>()
     var filteredDeviceList = MediatorLiveData<List<Device>>()
     var selectedDevice = MutableLiveData<Device>()
     var searchQuery = MutableLiveData<String>()
@@ -73,5 +73,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
+    fun changeFavouriteStatus(device: Device) {
+        val currentState = device.isFavourite
+        fullDeviceList.value?.let {
+            it.find { it == device }?.isFavourite = !currentState
+            fullDeviceList.value = it
+        }
+        //TODO here we changed favourite status locally. Need addition post API call too notify server
+    }
 }

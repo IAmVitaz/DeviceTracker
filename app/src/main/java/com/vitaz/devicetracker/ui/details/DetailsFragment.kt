@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.vitaz.devicetracker.R
 
 import com.vitaz.devicetracker.databinding.DetailsFragmentBinding
 import com.vitaz.devicetracker.misc.setUri
+import com.vitaz.devicetracker.networking.dto.Device
 import com.vitaz.devicetracker.ui.main.MainViewModel
 
 
@@ -31,18 +35,36 @@ class DetailsFragment: Fragment() {
         val view = binding.root
 
         bindObservers()
+        bindListeners()
 
         return view
     }
 
+    private fun bindListeners() {
+        binding.favourite.setOnClickListener {
+            viewModel.selectedDevice.value?.let {
+                viewModel.changeFavouriteStatus(it)
+                setFavourite()
+            }
+        }
+    }
+
     private fun bindObservers() {
-        viewModel.selectedDevice.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                val uri = Uri.parse(it.imageUrl)
+        viewModel.selectedDevice.observe(viewLifecycleOwner, Observer { device ->
+            if (device != null) {
+                val uri = Uri.parse(device.imageUrl)
                 setUri(binding.deviceImage, uri, true)
-                binding.device = it
+                binding.device = device
+                setFavourite()
             }
         })
+    }
+
+    private fun setFavourite() {
+        when (viewModel.selectedDevice.value!!.isFavourite) {
+            true -> binding.favourite.setColorFilter(ContextCompat.getColor(requireContext(), R.color.accent), android.graphics.PorterDuff.Mode.SRC_IN)
+            false -> binding.favourite.setColorFilter(ContextCompat.getColor(requireContext(), R.color.secondaryText), android.graphics.PorterDuff.Mode.SRC_IN)
+        }
     }
 
     override fun onDestroyView() {

@@ -84,8 +84,12 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
         connectivityLiveData.observe(viewLifecycleOwner, { isAvailable ->
             when (isAvailable) {
                 true -> {
-                    viewModel.getDevices()
-                    onLoadingStateChanged(LoadingState.LOADING, devicesListRecyclerView)
+                    if (viewModel.fullDeviceList.value.isNullOrEmpty()) {
+                        viewModel.getDevices()
+                        onLoadingStateChanged(LoadingState.LOADING, devicesListRecyclerView)
+                    } else {
+                        onLoadingStateChanged(LoadingState.LOADED, devicesListRecyclerView)
+                    }
                 }
                 false -> onLoadingStateChanged(LoadingState.NO_INTERNET, devicesListRecyclerView)
             }

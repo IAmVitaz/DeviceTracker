@@ -12,6 +12,6 @@ data class Device(
     val price: String,
     val currency: String,
     val rating: Float,
-    val isFavourite: Boolean,
+    var isFavourite: Boolean,
     val imageUrl: String
 )
