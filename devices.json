@@ -33,16 +33,49 @@
             "isFavorite": false,
             "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Honeywell_round_thermostat.jpg/2880px-Honeywell_round_thermostat.jpg"
         },
-            {
+        {
             "id": "1237",
             "title": "Diode",
             "description": "A diode is a two-terminal electronic component that conducts current primarily in one direction (asymmetric conductance); it has low (ideally zero) resistance in one direction, and high (ideally infinite) resistance in the other.",
-            "type": "Thermostat", 
+            "type": "Semiconductor", 
             "price": 2,
             "currency": "USD",
             "rating": 4.0,
             "isFavorite": false,
             "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Diode-closeup.jpg"
+        },
+        {
+            "id": "1238",
+            "title": "Transistor",
+            "description": "A transistor is a semiconductor device used to amplify or switch electrical signals and power. The transistor is one of the basic building blocks of modern electronics.[1] It is composed of semiconductor material, usually with at least three terminals for connection to an electronic circuit. A voltage or current applied to one pair of the transistor's terminals controls the current through another pair of terminals. Because the controlled (output) power can be higher than the controlling (input) power, a transistor can amplify a signal. Some transistors are packaged individually, but many more are found embedded in integrated circuits.",
+            "type": "Semiconductor", 
+            "price": 5,
+            "currency": "USD",
+            "rating": 3.5,
+            "isFavorite": true,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Transistorer_%28cropped%29.jpg/340px-Transistorer_%28cropped%29.jpg"
+        },
+        {
+            "id": "1239",
+            "title": "Resistor",
+            "description": "A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. In electronic circuits, resistors are used to reduce current flow, adjust signal levels, to divide voltages, bias active elements, and terminate transmission lines, among other uses. High-power resistors that can dissipate many watts of electrical power as heat, may be used as part of motor controls, in power distribution systems, or as test loads for generators. Fixed resistors have resistances that only change slightly with temperature, time or operating voltage. Variable resistors can be used to adjust circuit elements (such as a volume control or a lamp dimmer), or as sensing devices for heat, light, humidity, force, or chemical activity.",
+            "type": "Passive component", 
+            "price": 6,
+            "currency": "USD",
+            "rating": 4.5,
+            "isFavorite": true,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Surface_Mounted_Device%2C_soldered.jpg"
+        },
+        {
+            "id": "1240",
+            "title": "Crystal oscillator",
+            "description": "A crystal oscillator is an electronic oscillator circuit that uses the mechanical resonance of a vibrating crystal of piezoelectric material to create an electrical signal with a constant frequency. This frequency is often used to keep track of time, as in quartz wristwatches, to provide a stable clock signal for digital integrated circuits, and to stabilize frequencies for radio transmitters and receivers. The most common type of piezoelectric resonator used is a quartz crystal, so oscillator circuits incorporating them became known as crystal oscillators.[1] However, other piezoelectric materials including polycrystalline ceramics are used in similar circuits.",
+            "type": "Electromechanical", 
+            "price": 15,
+            "currency": "USD",
+            "rating": 5.0,
+            "isFavorite": false,
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/16MHZ_Crystal.jpg"
         }
 
     ]
