@@ -1,10 +1,7 @@
 package com.vitaz.devicetracker.ui
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.vitaz.devicetracker.networking.clients.DeviceService
 import com.vitaz.devicetracker.networking.dto.Device
 import kotlinx.coroutines.Dispatchers
@@ -82,5 +79,9 @@ class MainViewModel : ViewModel() {
             fullDeviceList.value = it
         }
         //TODO here we changed favourite status locally. Need addition post API call too notify server
+    }
+
+    fun getDetail(): LiveData<List<Device>?> {
+        return fullDeviceList
     }
 }
