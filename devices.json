@@ -52,7 +52,7 @@
             "price": 5,
             "currency": "USD",
             "rating": 3.5,
-            "isFavorite": true,
+            "isFavorite": false,
             "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Transistorer_%28cropped%29.jpg/340px-Transistorer_%28cropped%29.jpg"
         },
         {
@@ -63,7 +63,7 @@
             "price": 6,
             "currency": "USD",
             "rating": 4.5,
-            "isFavorite": true,
+            "isFavorite": false,
             "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Surface_Mounted_Device%2C_soldered.jpg"
         },
         {
