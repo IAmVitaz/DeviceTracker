@@ -8,4 +8,5 @@
     <string name="price">Price:</string>
     <string name="rating">Rating:</string>
     <string name="search">Search</string>
+    <string name="no_internet_message">There is no alerts available for this time period.</string>
 </resources>

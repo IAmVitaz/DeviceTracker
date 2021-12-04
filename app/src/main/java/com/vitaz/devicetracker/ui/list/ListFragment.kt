@@ -1,7 +1,8 @@
-package com.vitaz.devicetracker.ui.main
+package com.vitaz.devicetracker.ui.list
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.viewModels
@@ -14,11 +15,12 @@ import com.vitaz.devicetracker.R
 import com.vitaz.devicetracker.databinding.MainFragmentBinding
 import com.vitaz.devicetracker.networking.NetworkChecker
 import com.vitaz.devicetracker.networking.dto.Device
+import com.vitaz.devicetracker.ui.MainViewModel
 import com.vitaz.gifaro.connectivity.ConnectivityLiveData
 import com.vitaz.gifaro.connectivity.LoadableFragment
 import com.vitaz.gifaro.connectivity.LoadingState
 
-class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectListener {
+class ListFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectListener {
 
     private lateinit var devicesListRecyclerAdapter: DevicesRecyclerAdapter
     private lateinit var devicesListRecyclerView: RecyclerView
@@ -50,6 +52,7 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
 
         setupDeviceListRecyclerAdapter()
         bindObservers()
+        bindSwipeContainer()
 
         return view
     }
@@ -84,7 +87,7 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
         connectivityLiveData.observe(viewLifecycleOwner, { isAvailable ->
             when (isAvailable) {
                 true -> {
-                    if (viewModel.fullDeviceList.value.isNullOrEmpty()) {
+                    if (viewModel.isDeviceListNull()) {
                         viewModel.getDevices()
                         onLoadingStateChanged(LoadingState.LOADING, devicesListRecyclerView)
                     } else {
@@ -107,7 +110,20 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
                 onLoadingStateChanged(LoadingState.LOADED, devicesListRecyclerView)
             }
         })
+    }
 
+    private fun bindSwipeContainer() {
+        binding.swipeContainer.setOnRefreshListener {
+            if (NetworkChecker.isNetworkAvailable(requireContext())) {
+                viewModel.getDevices()
+                onLoadingStateChanged(LoadingState.LOADING, devicesListRecyclerView)
+
+            } else {
+                Toast.makeText(requireActivity(), R.string.no_internet_message, Toast.LENGTH_LONG)
+                    .show()
+            }
+            binding.swipeContainer.isRefreshing = false
+        }
     }
 
     override fun onDestroyView() {
@@ -117,7 +133,7 @@ class MainFragment : LoadableFragment(), DevicesRecyclerAdapter.OnDeviceSelectLi
 
     override fun onDeviceSelect(device: Device) {
         viewModel.selectedDevice.value = device
-        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment()
+        val action = ListFragmentDirections.actionMainFragmentToDetailsFragment()
         findNavController().navigate(action)
     }
 

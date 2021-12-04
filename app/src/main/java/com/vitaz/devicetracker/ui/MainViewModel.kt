@@ -1,4 +1,4 @@
-package com.vitaz.devicetracker.ui.main
+package com.vitaz.devicetracker.ui
 
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
@@ -16,19 +16,16 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
     private val deviceService = DeviceService.getDevices()
-    var fullDeviceList = MutableLiveData<List<Device>>()
+    private var fullDeviceList = MutableLiveData<List<Device>>()
     var filteredDeviceList = MediatorLiveData<List<Device>>()
     var selectedDevice = MutableLiveData<Device>()
     var searchQuery = MutableLiveData<String>()
 
-
     init {
         searchQuery.value = ""
-
         filteredDeviceList.addSource(searchQuery) {
             applySearchQuery(it)
         }
-
         filteredDeviceList.addSource(fullDeviceList) {
             filteredDeviceList.value = it
         }
@@ -63,11 +60,16 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun isDeviceListNull(): Boolean {
+        if (fullDeviceList.value.isNullOrEmpty()) return true
+        return false
+    }
+
     private fun applySearchQuery(searchQuery: String) {
         fullDeviceList.value?.let {
             val filteredList = it.filter { device ->
-                device.title.lowercase(Locale.ROOT)
-                    .contains(searchQuery.lowercase(Locale.ROOT))
+                device.title.lowercase(Locale.ROOT).contains(searchQuery.lowercase(Locale.ROOT)) ||
+                device.type.lowercase(Locale.ROOT).contains(searchQuery.lowercase(Locale.ROOT))
             }
             filteredDeviceList.value = filteredList
         }

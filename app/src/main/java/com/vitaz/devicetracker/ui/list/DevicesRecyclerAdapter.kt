@@ -1,4 +1,4 @@
-package com.vitaz.devicetracker.ui.main
+package com.vitaz.devicetracker.ui.list
 
 import android.content.Context
 import android.net.Uri

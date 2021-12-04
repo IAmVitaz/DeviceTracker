@@ -3,11 +3,9 @@ package com.vitaz.devicetracker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.vitaz.devicetracker.databinding.MainActivityBinding
-import com.vitaz.devicetracker.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,8 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        supportActionBar?.hide()
 
         binding = MainActivityBinding.inflate(layoutInflater)
         val view = binding.root
