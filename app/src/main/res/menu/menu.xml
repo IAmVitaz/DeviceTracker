@@ -10,4 +10,10 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
+    <item android:id="@+id/action_share"
+        android:title="@string/share"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/secondaryText"
+        app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"/>
+
 </menu>
